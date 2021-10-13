@@ -10,11 +10,11 @@ loanTerm CRUD : permission for bank group only
 
 http://localhost:8000/api/loanterm-viewset/
 
-investor API : to search(GET) available loan fund based by amount added in body, and subscribe to a fund (PUT) with fundNumber and amount in body. Permission for investor group only.
+investor API : to search(GET) to see the investor's fund applications, and subscribe to a fund (POST) with "type" for the fund the user wants to subscribe to and "amount" in body. Permission for investor group only.
 
 http://localhost:8000/api/investorAPI/
 
-customer API : to search(GET) available loan term based by amount added in body, and subscribe to a term (PUT) with termNumber and amount in body. Permission for customer group only.
+customer API : to search(GET) to see the cutomer loan applications,and subscribe to a fund (POST) with "type" for the fund the user wants to subscribe to and "amount" in body. Permission for customer group only.
 
 http://localhost:8000/api/investorAPI/
 
