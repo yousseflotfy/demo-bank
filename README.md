@@ -18,7 +18,7 @@ customer API : to search(GET) to see the cutomer loan applications,and subscribe
 
 http://localhost:8000/api/investorAPI/
 
-applications API: returns (GET) the user's applications with all related info.
+view loans API: returns (GET) all avialble loan terms/funs that the user could subscribe to.
 
 http://localhost:8000/api/applicationsAPI/
 
