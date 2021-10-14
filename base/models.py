@@ -20,68 +20,86 @@ from django.utils.translation import gettext_lazy as _
 #         return self.phase
 
 class LoanFund(models.Model):
-
-    class Status(models.TextChoices):
-        NO_APPLICANTS = 'NA' , _('No Applicants')
-        IN_PROCESS = 'IP' , _('In Process')
-        APPROVED = 'AP' , _('Approved')
-        DENIED = 'DN' , _('Denied')
-    
+ 
     def allowedDefault():
          #return {"name": "bankPersonnel"}
          return Group.objects.get(name = 'bankPersonnel')
 
-    amount = models.PositiveIntegerField(null = True, blank = True)
-    allowed = models.ManyToManyField(Group)
-    status = models.CharField(
-        max_length=2,
-        choices=Status.choices,
-        default=Status.NO_APPLICANTS,
-    )
-    #status = models.ForeignKey(Status,on_delete=models.CASCADE, null = True, default= 1)
-    creator = models.ForeignKey(User,on_delete = models.CASCADE , null = True, blank = True)
-    provider = models.ForeignKey(User,on_delete= models.CASCADE,related_name='provider', null = True, blank= True)
+
+    creator = models.ForeignKey(User,on_delete = models.CASCADE, default = None)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    fund_type = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique= True)
     duration_years = models.PositiveIntegerField()
     intrest_rate = models.FloatField()
     max_amount = models.PositiveIntegerField()
     min_amount = models.PositiveIntegerField()
+
+
+
+
+class FundApplication(models.Model):
+    class Status(models.TextChoices):
+        IN_PROCESS = 'IP' , _('In Process')
+        APPROVED = 'AP' , _('Approved')
+        DENIED = 'DN' , _('Denied')
+    status = models.CharField(
+        max_length=2,
+        choices=Status.choices,
+        default=Status.IN_PROCESS,
+    )  
+    amount = models.PositiveIntegerField()  
+    provider = models.ForeignKey(User,on_delete= models.CASCADE,related_name='provider')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    fund_type = models.ForeignKey(LoanFund,on_delete = models.CASCADE)
+
 
 
 
 
 
 class LoanTerm(models.Model):
-    class Status(models.TextChoices):
-        NO_APPLICANTS = 'NA' , _('No Applicants')
-        IN_PROCESS = 'IP' , _('In Process')
-        APPROVED = 'AP' , _('Approved')
-        DENIED = 'DN' , _('Denied')
+    # class Status(models.TextChoices):
+    #     NO_APPLICANTS = 'NA' , _('No Applicants')
+    #     IN_PROCESS = 'IP' , _('In Process')
+    #     APPROVED = 'AP' , _('Approved')
+    #     DENIED = 'DN' , _('Denied')
     
     def allowedDefault():
          #return {"name": "bankPersonnel"}
          return Group.objects.get(name = 'bankPersonnel')
 
 
-    amount = models.PositiveIntegerField(null = True, blank = True)
-    allowed = models.ManyToManyField(Group)
-    status = models.CharField(
-        max_length=2,
-        choices=Status.choices,
-        default=Status.NO_APPLICANTS,
-    )
-  #  status = models.ForeignKey(Status,on_delete = models.CASCADE,null = True, default = 1)
-    creator = models.ForeignKey(User,on_delete = models.CASCADE , null = True, blank = True)
-    customer = models.ForeignKey(User,on_delete= models.CASCADE,related_name='customer', null = True, blank = True) 
+
+    creator = models.ForeignKey(User,on_delete = models.CASCADE, default = None)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    loan_type = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique= True)
     duration_years = models.PositiveIntegerField()
     intrest_rate = models.FloatField()
     max_amount = models.PositiveIntegerField()
     min_amount = models.PositiveIntegerField()
+
+
+
+
+
+class TermApplication(models.Model):
+    class Status(models.TextChoices):
+        IN_PROCESS = 'IP' , _('In Process')
+        APPROVED = 'AP' , _('Approved')
+        DENIED = 'DN' , _('Denied')
+    status = models.CharField(
+        max_length=2,
+        choices=Status.choices,
+        default=Status.IN_PROCESS,
+    )  
+    amount = models.PositiveIntegerField()  
+    customer = models.ForeignKey(User,on_delete= models.CASCADE,related_name='customer')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    term_type = models.ForeignKey(LoanTerm,on_delete = models.CASCADE)    
 
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)

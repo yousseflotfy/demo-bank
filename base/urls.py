@@ -16,7 +16,7 @@ urlpatterns = [
     path('',include(router.urls)),
     path('auth/', include('djoser.urls.authtoken')),
     url(r'^investorAPI',views.investorAPI.as_view()),
-    url(r'^applicationsAPI',views.applicationsAPI.as_view()),
+    url(r'^viewloansAPI',views.viewloansAPI.as_view()),
     url(r'^customerAPI',views.customerAPI.as_view()),
     url(r'^editFundStatusAPI',views.editFundApplicationsAPI.as_view()),
     url(r'^editTermStatusAPI',views.editTermApplicationsAPI.as_view()),
