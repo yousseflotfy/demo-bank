@@ -8,19 +8,23 @@ from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register('loanfund-viewset', views.LoanFundViewSet)
-router.register('loanTerm-viewset', views.LoanTermViewSet)
+# router.register('loanfund-viewset', views.LoanFundViewSet)
+# router.register('loanTerm-viewset', views.LoanTermViewSet)
 # router.register('loanfund-get', views.getLoanFund)
 
 urlpatterns = [
-    path('',include(router.urls)),
+    # path('',include(router.urls)),
     path('auth/', include('djoser.urls.authtoken')),
-    url(r'^investorAPI',views.investorAPI.as_view()),
-    url(r'^viewloansAPI',views.viewloansAPI.as_view()),
-    url(r'^customerAPI',views.customerAPI.as_view()),
-    url(r'^editFundStatusAPI',views.editFundApplicationsAPI.as_view()),
-    url(r'^editTermStatusAPI',views.editTermApplicationsAPI.as_view()),
-    url(r'^amortizationAPI',views.amotizationAPI.as_view()),
+    path('investorAPI',views.investorAPI.as_view()),
+    path('viewloansAPI',views.viewloansAPI.as_view()),
+    path('customerAPI',views.customerAPI.as_view()),
+    path('editFundStatusAPI/<int:pk>/',views.editFundApplicationsAPI.as_view()),
+    path('editFundStatusAPI/',views.editFundApplicationsAPI.as_view()),
+    path('editTermStatusAPI/<int:pk>/',views.editTermApplicationsAPI.as_view()),
+    path('editTermStatusAPI/',views.editTermApplicationsAPI.as_view()),
+    path('amortizationAPI/<int:pk>/',views.amotizationAPI.as_view()),
+    path('loantermAPI',views.loantermAPI.as_view()),
+    path('loanfundAPI',views.loanfundAPI.as_view()),
    
     # path('',views.home, name = "home"),
     # path('loanfund-viewset',views.LoanFundViewSet, name = "loanfund-viewset"),
