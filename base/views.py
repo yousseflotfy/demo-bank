@@ -364,6 +364,26 @@ class editFundApplicationsAPI(APIView):
         return Response('Please enter valid status')
 
 
+class makePaymentAPI(APIView):
+    permission_classes = [isCustomer]
+
+    def put(self,request,pk):
+        payment  = request.data.get('amount')
+        queryset = TermApplication.objects.filter(customer = request.user)
+        loan = queryset.get(id = pk)
+        if loan == None :
+            return Response({"loan not avialable "})
+        if payment > loan.amount :
+            return Response({"payment is greater then the total amount of your loan"})
+        loan.amount = loan.amount - payment
+        loan.save()
+        serializer = TermApplicationSerializer(loan)
+        return Response({"Thank you for your payment": serializer.data})    
+
+
+
+
+
 
 
 class editTermApplicationsAPI(APIView):
@@ -401,6 +421,41 @@ class editTermApplicationsAPI(APIView):
             term.save()
             return Response('Status updated')    
         return Response('Please enter valid status')
+
+class bankReportsAPI(APIView):
+    permission_classes = [isBank]
+    def get(self,request):
+   
+        bank_count = User.objects.filter(groups = 1).count()
+        customer_count = User.objects.filter(groups = 3).count()
+        investor_count = User.objects.filter(groups = 2).count()
+        totalapfunds = 0 
+        totalaploans = 0
+        totaldenfunds = 0 
+        totaldenloans = 0
+        funds = FundApplication.objects.all()
+        loans = TermApplication.objects.all()
+        for f in funds :
+            if f.status == 'AP':
+                totalapfunds+= f.amount
+            if f.status == 'DN':
+                totaldenfunds+= f.amount    
+        for l in loans :
+            if l.status == 'AP':
+                totalaploans += l.amount 
+            if l.status == 'DN':
+                totaldenloans += l.amount 
+        return Response({"number of employees":bank_count ,
+                        "number of investors":investor_count ,
+                        "number of customers":customer_count ,
+                        "total amount of approved funds" : totalapfunds,
+                        "total amount of approved loans" : totalaploans,
+                        "total amount of denied funds" : totaldenfunds,
+                        "total amount of denied loans" : totaldenloans
+                        })            
+
+
+     
 
 class loantermAPI(APIView):
     permission_classes = [isBank]

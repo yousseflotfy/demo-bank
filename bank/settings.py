@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     
     
+    
 ]
 
 
@@ -108,6 +109,23 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+
+    #     'ENGINE': 'django.db.backends.postgresql',
+
+    #     'NAME': 'bankDB',
+
+    #     'USER': 'postgres',
+
+    #     'PASSWORD': 'admin',
+
+    #     'HOST': '127.0.0.1',
+
+    #     'PORT': '5432',
+
+    # }
+
+
 }
 
 

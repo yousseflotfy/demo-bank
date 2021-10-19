@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User , Group
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 
@@ -14,10 +14,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-# class Status(models.Model):
-#     phase = models.CharField(max_length= 200)
-#     def __str__(self):
-#         return self.phase
 
 class LoanFund(models.Model):
  
@@ -80,7 +76,6 @@ class LoanTerm(models.Model):
     intrest_rate = models.FloatField()
     max_amount = models.PositiveIntegerField()
     min_amount = models.PositiveIntegerField()
-
 
 
 
